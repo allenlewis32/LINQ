@@ -4,35 +4,40 @@
 	{
 		static void Main(string[] args)
 		{
-			List<string> list = new List<string> { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
-			var query = from name in list select name;
+			List<int> list = new() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+			List<int> list2 = new() { 1, 2, 3, 4, 5, 16, 17, 18, 19, 20};
 
-			List<string> list2 = new();
-			for (int i = 0; i < 3; i++)
+			List<List<int>> nestedList = new() { list, list2 };
+			var res = nestedList.SelectMany(list => list.Where(n => n > 10));
+			
+			foreach(var item in res)
 			{
-				list2.Add(list[i]);
+				Console.WriteLine(item);
 			}
 
-			List<Student> students = new()
+			List<Employee> employees = new()
 			{
-				new(){ Id = 1, Name = "Allen", Email = "allenlewis32@gmail.com"},
-				new(){ Id = 2, Name = "Patricia", Email = "rheonapatricia@gmail.com"},
-				new(){ Id = 3, Name = "Rex", Email = "hermanrexj@gmail.com"},
-				new(){ Id = 4, Name = "Janet", Email = "janetrex72@gmail.com"},
+				new(){ Id = 1, Name = "A", Dept = "Dev"},
+				new(){ Id = 2, Name = "B", Dept = "Test"},
+				new(){ Id = 3, Name = "C", Dept = "Dev"},
+				new(){ Id = 4, Name = "D", Dept = "Test"},
 			};
 
-			var query2 = from student in students where student.Id > 2 select student;
+			var query2 = employees.Where(emp =>
+			{
+				return emp.Id > 2 && emp.Dept == "Test";
+			});
 
 			foreach (var item in query2)
 			{
 				Console.WriteLine(item.Name);
 			}
 		}
-		class Student
+		class Employee
 		{
 			public int Id;
 			public string Name;
-			public string Email;
+			public string Dept;
 		}
 	}
 }
