@@ -6,39 +6,9 @@ namespace LINQ
 	{
 		static void Main(string[] args)
 		{
-			List<Student> students = new()
-			{
-				new("A", 1),
-				new("B", 2),
-				new("AB", 3),
-				new("ABC", 3),
-				new("ABC", 4),
-			};
-			Console.WriteLine("Distinct");
-			foreach (var item in students.DistinctBy(student => student.name))
-			{
-				Console.WriteLine(item.name);
-			}
-
-			List<Student> students2 = new()
-			{
-				new("A", 1),
-				new("B", 2),
-				new("C", 3),
-				new("D", 4),
-			};
-			Console.WriteLine("Except");
-			foreach (var item in students.Select(x => x.name).Except(students2.Select(x => x.name)))
-			{
-				Console.WriteLine(item);
-			}
-
-			Console.WriteLine("Union");
-			foreach(var item in students.Union(students2))
-			{
-				Console.WriteLine($"Name: {item.name}, Age: {item.age}");
-			}
-
+			List<int> list = new() { 5, 1, 4, 2, 3, 10, 6, 9, 7, 8, 0 };
+			list.Take(5).ToList().ForEach(x => Console.WriteLine(x));
+			list.TakeWhile(x => x < 10).ToList().ForEach(x => Console.WriteLine(x));
 		}
 		class Student
 		{
