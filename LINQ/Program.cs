@@ -6,27 +6,39 @@ namespace LINQ
 	{
 		static void Main(string[] args)
 		{
-			List<int> numbers = new() { 5, 1, 4, 2, 3 };
-			numbers.Reverse();
-			var res = numbers.FindAll(x => x > 2);
-			foreach (var item in res) Console.WriteLine(item);
-
-			List<Student> students = new() { new("A", 14), new("B", 23), new("C", 41), new("D", 32) };
-
-			Console.WriteLine(students.Contains(new("A", 14), new Comp()));
-		}
-		class Comp : EqualityComparer<Student>
-		{
-			public override bool Equals(Student? x, Student? y)
+			List<Student> students = new()
 			{
-				if (x == null || y == null) return false;
-				return x.name == y.name && x.age == y.age;
+				new("A", 1),
+				new("B", 2),
+				new("AB", 3),
+				new("ABC", 3),
+				new("ABC", 4),
+			};
+			Console.WriteLine("Distinct");
+			foreach (var item in students.DistinctBy(student => student.name))
+			{
+				Console.WriteLine(item.name);
 			}
 
-			public override int GetHashCode([DisallowNull] Student obj)
+			List<Student> students2 = new()
 			{
-				throw new NotImplementedException();
+				new("A", 1),
+				new("B", 2),
+				new("C", 3),
+				new("D", 4),
+			};
+			Console.WriteLine("Except");
+			foreach (var item in students.Select(x => x.name).Except(students2.Select(x => x.name)))
+			{
+				Console.WriteLine(item);
 			}
+
+			Console.WriteLine("Union");
+			foreach(var item in students.Union(students2))
+			{
+				Console.WriteLine($"Name: {item.name}, Age: {item.age}");
+			}
+
 		}
 		class Student
 		{
